@@ -38,14 +38,14 @@
 
         <!-- Step 1: Upload Video -->
         <div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-5 space-y-4">
-            <h2 class="text-sm font-semibold uppercase tracking-wider text-slate-400">Step 1. 上傳影片 (限 10 秒內)</h2>
+            <h2 class="text-sm font-semibold uppercase tracking-wider text-slate-400">Step 1. 上傳影片 (限 3 分鐘內)</h2>
             
             <label class="flex flex-col items-center justify-center border-2 border-dashed border-slate-200 hover:border-indigo-400 bg-slate-50 hover:bg-indigo-50/30 rounded-xl p-6 cursor-pointer transition-all">
                 <div class="w-12 h-12 rounded-full bg-indigo-50 text-indigo-600 flex items-center justify-center mb-2 shadow-sm">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
                 </div>
                 <span id="upload-text" class="text-sm font-medium text-slate-700">點擊選擇影片檔案</span>
-                <span class="text-xs text-slate-400 mt-1">支援 MP4, MOV 等格式 (小於 10 秒)</span>
+                <span class="text-xs text-slate-400 mt-1">支援 MP4, MOV 等格式 (小於 3 分鐘)</span>
                 <input type="file" id="video-input" accept="video/*" class="hidden">
             </label>
 
@@ -73,22 +73,28 @@
 
                 <!-- Slider with Fine-tune buttons -->
                 <div class="flex items-center gap-3">
-                    <button id="btn-minus" type="button" class="w-11 h-11 flex-shrink-0 bg-slate-100 hover:bg-slate-200 active:bg-slate-300 text-slate-700 rounded-xl font-bold text-lg flex items-center justify-center transition-colors shadow-sm">-0.1s</button>
+                    <button id="btn-minus" type="button" class="w-12 h-11 flex-shrink-0 bg-slate-100 hover:bg-slate-200 active:bg-slate-300 text-slate-700 rounded-xl font-medium text-xs flex flex-col items-center justify-center transition-colors shadow-sm">
+                        <span>-1</span>
+                        <span class="text-[10px] text-slate-400">frame</span>
+                    </button>
                     
-                    <input type="range" id="time-slider" min="0" max="10" step="0.01" value="0" class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-indigo-600">
+                    <input type="range" id="time-slider" min="0" max="180" step="0.01" value="0" class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-indigo-600">
                     
-                    <button id="btn-plus" type="button" class="w-11 h-11 flex-shrink-0 bg-slate-100 hover:bg-slate-200 active:bg-slate-300 text-slate-700 rounded-xl font-bold text-lg flex items-center justify-center transition-colors shadow-sm">+0.1s</button>
+                    <button id="btn-plus" type="button" class="w-12 h-11 flex-shrink-0 bg-slate-100 hover:bg-slate-200 active:bg-slate-300 text-slate-700 rounded-xl font-medium text-xs flex flex-col items-center justify-center transition-colors shadow-sm">
+                        <span>+1</span>
+                        <span class="text-[10px] text-slate-400">frame</span>
+                    </button>
                 </div>
-                <p class="text-xs text-slate-400 text-center">提示：拉動滑桿或點擊左右微調按鈕預覽畫面（截圖範圍為前後各 0.5 秒）</p>
+                <p class="text-xs text-slate-400 text-center">提示：拉動滑桿或點擊按鈕微調影格（截圖範圍為前後各 0.1 秒）</p>
             </div>
 
             <!-- Step 3: Frame Count Setting -->
             <div class="pt-3 border-t border-slate-100 space-y-3">
                 <div class="flex justify-between items-center">
-                    <label class="text-sm font-medium text-slate-700">分割張數設定 <span class="text-xs text-slate-400">(上限 60 張)</span></label>
-                    <span class="text-sm font-bold text-indigo-600 bg-indigo-50 px-2.5 py-0.5 rounded-md"><span id="frame-count-display">20</span> 張</span>
+                    <label class="text-sm font-medium text-slate-700">分割張數設定 <span class="text-xs text-slate-400">(上限 20 張)</span></label>
+                    <span class="text-sm font-bold text-indigo-600 bg-indigo-50 px-2.5 py-0.5 rounded-md"><span id="frame-count-display">10</span> 張</span>
                 </div>
-                <input type="range" id="frame-count-slider" min="1" max="60" value="20" class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-indigo-600">
+                <input type="range" id="frame-count-slider" min="1" max="20" value="10" class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-indigo-600">
             </div>
 
             <!-- Execute Button -->
@@ -107,7 +113,7 @@
         <!-- Step 4: Results Gallery -->
         <div id="results-section" class="hidden bg-white rounded-2xl shadow-sm border border-slate-100 p-5 space-y-4">
             <div class="flex justify-between items-center">
-                <h2 class="text-sm font-semibold uppercase tracking-wider text-slate-400">Step 3. 截圖成果 (請長按圖片儲存)</h2>
+                <h2 class="text-sm font-semibold uppercase tracking-wider text-slate-400">Step 3. 截圖成果 (可點擊下載或長按圖片儲存)</h2>
                 <span id="result-count" class="text-xs bg-emerald-50 text-emerald-700 font-medium px-2 py-0.5 rounded-md">已完成</span>
             </div>
             
@@ -151,6 +157,8 @@
         const captureCanvas = document.getElementById('capture-canvas');
 
         let videoDuration = 0;
+        let originalFileName = "video_frame";
+        const FRAME_TIME = 1 / 30; // 假設標準 30fps，一畫格約為 0.0333 秒
 
         function showToast(msg) {
             toastMessage.textContent = msg;
@@ -172,6 +180,10 @@
                 return;
             }
 
+            // Extract base file name without extension
+            const fullFileName = file.name;
+            originalFileName = fullFileName.substring(0, fullFileName.lastIndexOf('.')) || fullFileName;
+            
             fileNameSpan.textContent = file.name;
             uploadText.textContent = '更換影片';
             
@@ -182,13 +194,14 @@
                 videoDuration = previewVideo.duration;
                 videoDurationSpan.textContent = videoDuration.toFixed(2);
 
-                if (videoDuration > 10.5) {
-                    showToast('⚠️ 警告：影片長度超過 10 秒，建議上傳 10 秒以內的影片以獲得最佳效果！');
+                if (videoDuration > 180.5) {
+                    showToast('⚠️ 警告：影片長度超過 3 分鐘 (180 秒)，請限制在 3 分鐘以內！');
+                    return;
                 }
 
                 // Setup Sliders
                 timeSlider.max = videoDuration;
-                timeSlider.step = 0.01;
+                timeSlider.step = 0.001; // finer step precision for frame calculations
                 
                 // Default target time to middle of video or 0
                 const defaultTime = Math.min(videoDuration / 2, 5);
@@ -210,16 +223,16 @@
             previewVideo.currentTime = val;
         });
 
-        // Fine-tune buttons (-0.1s / +0.1s)
+        // Fine-tune buttons by Frame (1 frame ≈ 0.0333s)
         btnMinus.addEventListener('click', function() {
-            let val = Math.max(0, parseFloat(timeSlider.value) - 0.1);
+            let val = Math.max(0, parseFloat(timeSlider.value) - FRAME_TIME);
             timeSlider.value = val;
             currentTimeDisplay.textContent = val.toFixed(2);
             previewVideo.currentTime = val;
         });
 
         btnPlus.addEventListener('click', function() {
-            let val = Math.min(videoDuration, parseFloat(timeSlider.value) + 0.1);
+            let val = Math.min(videoDuration, parseFloat(timeSlider.value) + FRAME_TIME);
             timeSlider.value = val;
             currentTimeDisplay.textContent = val.toFixed(2);
             previewVideo.currentTime = val;
@@ -248,9 +261,9 @@
             const targetTime = parseFloat(timeSlider.value);
             const frameCount = parseInt(frameCountSlider.value, 10);
 
-            // Calculate 1-second window: targetTime ± 0.5s, clamped to video duration
-            let start = targetTime - 0.5;
-            let end = targetTime + 0.5;
+            // Calculate 0.2-second window: targetTime ± 0.1s, clamped to video duration
+            let start = targetTime - 0.1;
+            let end = targetTime + 0.1;
 
             if (start < 0) {
                 end = Math.min(videoDuration, end - start);
@@ -299,24 +312,35 @@
                     ctx.drawImage(previewVideo, 0, 0, captureCanvas.width, captureCanvas.height);
                     const dataUrl = captureCanvas.toDataURL('image/jpeg', 0.92);
                     
+                    // Generate formatted index string (01, 02, etc.)
+                    const seqIndex = String(i + 1).padStart(2, '0');
+                    const downloadFileName = `${originalFileName}_frame_${seqIndex}.jpg`;
+
                     capturedImages.push({
                         time: t.toFixed(2),
-                        url: dataUrl
+                        url: dataUrl,
+                        fileName: downloadFileName,
+                        index: seqIndex
                     });
                 }
 
                 // Render gallery
                 galleryGrid.innerHTML = '';
-                capturedImages.forEach((imgData, index) => {
+                capturedImages.forEach((imgData) => {
                     const card = document.createElement('div');
-                    card.className = 'bg-slate-50 border border-slate-200 rounded-xl overflow-hidden shadow-xs flex flex-col';
+                    card.className = 'bg-slate-50 border border-slate-200 rounded-xl overflow-hidden shadow-xs flex flex-col justify-between';
                     card.innerHTML = `
                         <div class="relative bg-black aspect-video flex items-center justify-center overflow-hidden">
-                            <img src="${imgData.url}" alt="Frame ${index + 1}" class="w-full h-full object-contain select-none" />
+                            <img src="${imgData.url}" alt="Frame ${imgData.index}" class="w-full h-full object-contain select-none" />
                         </div>
-                        <div class="p-2.5 bg-white flex justify-between items-center text-xs">
-                            <span class="font-semibold text-slate-700">#${index + 1}</span>
-                            <span class="text-indigo-600 font-medium">${imgData.time}s</span>
+                        <div class="p-2 bg-white space-y-1.5">
+                            <div class="flex justify-between items-center text-xs">
+                                <span class="font-semibold text-slate-700">#${imgData.index}</span>
+                                <span class="text-indigo-600 font-medium">${imgData.time}s</span>
+                            </div>
+                            <a href="${imgData.url}" download="${imgData.fileName}" class="block text-center w-full bg-slate-100 hover:bg-indigo-50 text-slate-700 hover:text-indigo-600 font-medium py-1 px-2 rounded-lg text-xs transition-colors truncate">
+                                ⬇️ ${imgData.fileName}
+                            </a>
                         </div>
                     `;
                     galleryGrid.appendChild(card);
